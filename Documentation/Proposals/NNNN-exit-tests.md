@@ -111,6 +111,11 @@ public enum ExitCondition: Sendable {
   /// | macOS | `<signal.h>` |
   /// | Linux | `<signal.h>` |
   /// | Windows | `<signal.h>` |
+  ///
+  /// On Windows, by default, the C runtime will terminate a process with exit
+  /// code `-3` if a raised signal is not handled, exactly as if `exit(-3)` were
+  /// called. As a result, this case is unavailable on that platform. Developers
+  /// should use ``failure`` instead when testing signal handling on Windows.
 #if os(Windows)
   @available(*, unavailable, message: "On Windows, use .failure instead.")
 #endif
@@ -163,10 +168,11 @@ public enum ExitCondition: Sendable {
 ```
 
 > [!NOTE]
-> `SWT_NO_EXIT_TESTS` will be defined in the testing library's target on
+> `SWT_NO_EXIT_TESTS` is defined by the testing library when building for
 > platforms that do not have the ability to spawn child processes (including
 > iOS, watchOS, tvOS, visionOS, and WASI.) In other words, these interfaces are
-> available on **macOS**, **Linux**, and **Windows**.
+> available on **macOS**, **Linux**, and **Windows**. `SWT_NO_EXIT_TESTS` is not
+> defined during test target builds.
 
 These macros can be used within a test function:
 
