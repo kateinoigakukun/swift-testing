@@ -286,6 +286,15 @@ compile executables for testing will inherit the functionality provided for
 that directly compile test targets or otherwise do not leverage Swift Package
 Manager will need to provide an implementation.
 
+### Updated C entry point
+
+To facilitate tools that handle test process lifetimes directly (instead of
+relying on Swift Package Manager, Xcode, etc.) an updated ABI entry point
+function will be provided. For more information about the ABI entry point, see
+the previous [SWT-0002](0002-json-abi.md) proposal. Documentation for this entry
+point function will be added to the [Documentation/ABI](../ABI) folder in the
+Swift Testing repository.
+
 ## Future directions
 
 ### Support for iOS, WASI, etc.
