@@ -346,6 +346,19 @@ await #expect {
 This overload of `#expect()` is similar to `#expect(_:throws:)` which can be
 used when the requirements for a thrown error are complex.
 
+### Support for throwing errors from exit test bodies
+
+Currently, throwing an error from an exit test is disallowed (exit test body
+closures not having the `throws` keyword) because it is unclear what the effect
+ought to be. A natural choice might be to propagate the error through the test
+process' main function and allow the Swift runtime to handle it, but not all
+configurations are created equal and it is not possible to do so consistently.
+
+Since a thrown error is, by design, not necessarily a fatal condition in Swift,
+it is reasonable to require exit tests to catch thrown errors (or, at least, use
+`try!` to force the Swift runtime to handle them.) Error handling is an area we
+can expand upon in the future if it proves to be important to exit test authors.
+
 ## Alternatives considered
 
 - Doing nothing.
